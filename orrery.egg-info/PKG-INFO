@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: orrery
+Version: 0.1.0
+Summary: Clockwork twins of real systems, scored against reality — the simulation layer that shows its calibration
+License: MIT
+Requires-Python: >=3.10
+Requires-Dist: crucible @ git+https://github.com/nKOxxx/crucible
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"

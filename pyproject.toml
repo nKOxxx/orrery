@@ -1,0 +1,15 @@
+[project]
+name = "orrery"
+version = "0.1.0"
+description = "Clockwork twins of real systems, scored against reality — the simulation layer that shows its calibration"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "crucible @ git+https://github.com/nKOxxx/crucible",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

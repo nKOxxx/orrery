@@ -1,0 +1,4 @@
+crucible @ git+https://github.com/nKOxxx/crucible
+
+[dev]
+pytest>=8.0
