@@ -62,13 +62,13 @@ def test_loop_refuses_non_binary_outcomes(tmp_path):
         lp.round("x", ["probe:now"], lambda fc: 0.5, n_runs=3)
 
 
-def test_sovereign_twin_health_beats_deal_and_is_graded():
+def test_sovereign_twin_cold_beats_warm_never_and_is_graded():
     t = SGTwin()
-    health = [t.simulate(s, kind="health") for s in range(200)]
-    deal = [t.simulate(s, kind="deal") for s in range(200)]
-    assert all(0.0 < p < 1.0 for p in health + deal)
-    assert sum(health) / len(health) > sum(deal) / len(deal)
-    fc = t.forecast("app is up", ["probe:now"], n_runs=16, seed0=0, kind="health")
+    warm = [t.simulate(s, kind="warm") for s in range(300)]
+    cold = [t.simulate(s, kind="cold") for s in range(300)]
+    assert all(0.0 < p < 1.0 for p in warm + cold)
+    assert sum(warm) / len(warm) > sum(cold) / len(cold)
+    fc = t.forecast("app is live", ["probe:now"], n_runs=16, seed0=0, kind="cold")
     assert fc.spread >= 0.0
     assert abs(fc.mean - sum(fc.probs) / len(fc.probs)) < 1e-12
 

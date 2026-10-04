@@ -23,16 +23,22 @@ class SGTwin(Twin):
         self,
         uptime_lo: float = 0.85,
         uptime_hi: float = 0.995,
-        correctness_lo: float = 0.80,
-        correctness_hi: float = 0.97,
+        cold_lo: float = 0.30,
+        cold_hi: float = 0.70,
+        warm_lo: float = 0.93,
+        warm_hi: float = 0.99,
     ):
         self.uptime_lo, self.uptime_hi = uptime_lo, uptime_hi
-        self.correctness_lo, self.correctness_hi = correctness_lo, correctness_hi
+        self.cold_lo, self.cold_hi = cold_lo, cold_hi
+        self.warm_lo, self.warm_hi = warm_lo, warm_hi
 
-    def simulate(self, seed: int, kind: str = "deal", **_) -> float:
+    def simulate(self, seed: int, kind: str = "warm", **_) -> float:
+        """Liveness probability. `cold`: first hit after idle — the Render
+        free-tier dyno may be asleep and must spin up. `warm`: dyno already
+        hot from earlier probes. Both additionally carry the deployment's
+        baseline uptime regime."""
         rng = random.Random(seed)
         uptime = rng.uniform(self.uptime_lo, self.uptime_hi)
-        if kind == "health":
-            return uptime
-        correctness = rng.uniform(self.correctness_lo, self.correctness_hi)
-        return uptime * correctness
+        if kind == "cold":
+            return uptime * rng.uniform(self.cold_lo, self.cold_hi)
+        return uptime * rng.uniform(self.warm_lo, self.warm_hi)
